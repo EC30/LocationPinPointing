@@ -24,7 +24,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-
+    //Declaring Variable
     private GoogleMap mMap;
     LocationManager locationManager;
     LocationListener locationListener;
@@ -56,21 +56,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
      * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
+     * we just add a marker near user current location.
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+        //Setting up LocationListener and Locationmanager
         locationManager=(LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         locationListener=new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
                 // Toast.makeText(MapsActivity.this,location.toString(),Toast.LENGTH_SHORT).show();
-                // Add a marker in Sydney and move the camera
+                // Add a marker in user current location and move the camera
                 mMap.clear();
                 LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
                 mMap.addMarker(new MarkerOptions().position(userLocation).title("Your Location"));
@@ -92,7 +89,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
         };
-
+        //Checking the SDK version
         if(Build.VERSION.SDK_INT < 23){
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
             //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
